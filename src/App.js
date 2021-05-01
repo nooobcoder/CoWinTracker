@@ -23,10 +23,7 @@ function App() {
             updateMessage(`No centers found in ${pinCode}`)
 
         } catch (error) {
-            if (error.response.status === 400) {
-                console.log('API Error');
-            }
-            updateMessage(`No centers found in ${pinCode}`)
+            console.clear()
         }
         // console.log(response.data)
     }
@@ -35,13 +32,11 @@ function App() {
         var cards = []
         for (let center of centers) {
             const copySessions = center.sessions;
-            console.log(copySessions)
             const builder = [];
             for (let session of copySessions) {
                 const {date, slots} = session;
                 builder.push({date, slots})
             }
-            console.log(builder)
             cards.push(<Card style={{marginBottom: '50px', boxShadow: '10px 10px 5px #aaaaaa', borderRadius: '8px'}}>
                 <CardHeader style={{fontSize: '33px', fontFamily: 'arial'}} key={center.center_id}>CENTER
                     NAME: {center.name}</CardHeader>
