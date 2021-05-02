@@ -3,7 +3,7 @@
 
 URL 🔗: `http://cowintracker.duckdns.org/`
 
-![Mobile Responsive View](qr.png ){height=400px width=500px}
+![Mobile Responsive View](qr.png )
 
 **Search for vaccination centers in your area with the PIN code only.**
 
