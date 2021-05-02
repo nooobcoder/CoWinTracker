@@ -1,0 +1,9 @@
+web:
+  image: nginx
+  container_name: cowinserver
+  volumes:
+    - ./build:/usr/share/nginx/html
+  ports:
+    - "80:80"
+  environment:
+    - NGINX_PORT=80
