@@ -1,7 +1,9 @@
-# CoWin Tracker
+# CoWin Tracker 
 **Done with the CoWin Vaccination Tracker app today.**
 
 URL 🔗: `http://cowintracker.duckdns.org/`
+
+![Mobile Responsive View](qr.png ){height=400px width=500px}
 
 **Search for vaccination centers in your area with the PIN code only.**
 
@@ -10,7 +12,7 @@ This app benefits people to check vaccination centers in their location without 
 
 ## Mobile Responsive View
 
-![Mobile Responsive View](mobile-view.png)
+![Mobile Responsive View](mobile-view.png )
 
 ## Desktop View
 
