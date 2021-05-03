@@ -7,19 +7,53 @@ import GitHubButton from 'react-github-btn';
 import {Card, CardHeader, CardBody, CardFooter} from 'react-simple-card';
 import "styled-components";
 import DataTable from 'react-data-table-component';
+import YouTube from 'react-youtube';
 
 
 function App() {
+    const [open, setOpen] = useState(false);
+
+    const onOpenModal = () => setOpen(true);
+    const onCloseModal = () => setOpen(false);
+
+    const renderYoutubeVideo = () => {
+        const opts = {
+            height: '320',
+            width: '570',
+            playerVars: {
+                // https://developers.google.com/youtube/player_parameters
+                autoplay: 0,
+            },
+        };
+
+        return <div className="header mainheader"><YouTube videoId="XmA0-_e2gpQ" opts={opts}/></div>;
+    }
 
     const renderTable = (center) => {
-        console.log(center.length) // Number of rows
+        // console.log(center.length) // Number of rows
         let maxColumns = 0;
         let columns = [{
             name: `Date`,
             selector: `date`,
             center: true,
+            width:'160px',
             sortable: true,
-        }];
+        }, {
+            name: `Vacancy`,
+            selector: `vacancy`,
+            center: true,
+            width:'80px',
+            sortable: true,
+
+        }, {
+            name: `Age`,
+            width:'125px',
+
+            selector: `age`,
+            center: true,
+            sortable: true,
+        },
+        ];
         const data = [
             // {id: 1, date: 'Conan the Barbarian', year: '1982'},
             // {id: 2, date: 'Conan the Barbarian', year: '1982'}
@@ -29,24 +63,21 @@ function App() {
 
             maxColumns = entry.slots.length > maxColumns ? entry.slots.length : maxColumns;
             data.push({
-                id: index, date: entry.date,
+                id: index, date: entry.date, vacancy: entry.available_capacity, age: entry.min_age_limit,
             })
             for (const [i, e] of entry.slots.entries()) {
                 const keyname = `slot${i + 1}`;
                 data[index][keyname] = e
             }
         }
-        console.log('MAX COLS', data)
+
         for (let a = 0; a < maxColumns; ++a) {
             columns.push({
                 center: true,
+                width: 'auto',
                 name: `Slot ${a + 1}`,
                 selector: `slot${a + 1}`
             })
-        }
-
-        for (const ctr of center) {
-            console.log('DATE', ctr.date, ctr.length)
         }
 
         /*  columns = [
@@ -73,10 +104,47 @@ function App() {
              }
          ];*/
 
+        const conditionalRowStyles = [
+            {
+                when: row => row.vacancy >= 45,
+                style: {
+                    backgroundColor: 'rgba(169, 252, 144)',
+                    color: 'black',
+                    '&:hover': {
+                        // cursor: 'pointer',
+                    },
+                },
+            },
+            {
+                when: row => row.vacancy >= 10 && row.vacancy < 45,
+                style: {
+                    backgroundColor: 'rgba(245, 208, 164)',
+                    color: 'black',
+                    '&:hover': {
+                        // cursor: 'pointer',
+                    },
+                },
+            },
+            {
+                when: row => row.vacancy < 10,
+                style: {
+                    backgroundColor: 'rgba(255, 110, 110)',
+                    color: 'black',
+                    '&:hover': {
+                        // cursor: 'not-allowed',
+                    },
+                },
+            },
+        ];
+
+
         return <DataTable
+            responsive={true}
             title={center.name}
             columns={columns}
             data={data}
+            conditionalRowStyles={conditionalRowStyles}
+
         />
     }
 
@@ -84,7 +152,8 @@ function App() {
     const [pinCode, updatePinCode] = useState(0);
     const [centers, updateCenters] = useState([]);
     const [message, updateMessage] = useState('');
-    const getInfo = async () => {
+    const getInfo = async (e) => {
+        e.preventDefault();
         const obj = new Date();
         const config = {
             method: 'get',
@@ -93,7 +162,8 @@ function App() {
             response = await axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${obj.getDate()}-${obj.getMonth() + 1}-${obj.getFullYear()}`
                 , config)
             updateCenters(response.data.centers)
-            updateMessage(`No centers found in ${pinCode}`)
+
+            updateMessage(`No vaccination centers found in ${pinCode}`)
 
         } catch (error) {
             console.clear()
@@ -120,9 +190,12 @@ function App() {
             const builder = [];
             for (let session of copySessions) {
                 const {date, min_age_limit, vaccine, available_capacity} = session; // slots,date,
-                builder.push({date, min_age_limit, vaccine, available_capacity, })
+                builder.push({date, min_age_limit, vaccine, available_capacity,})
             }
-            cards.push(<Card style={{marginBottom: '50px', boxShadow: '10px 10px 5px #aaaaaa', borderRadius: '8px'}}>
+            const FeeTypeColor = center.fee_type === 'Free' ? '#4CAF50' : '#FF4500'
+            // console.log(FeeTypeColor)
+            cards.push(<Card style={{marginBottom: '50px', boxShadow: '10px 10px 5px #aaaaaa', borderRadius: '8px'}}
+                             key={center.center_id}>
                     <CardHeader style={{fontSize: '33px', fontFamily: 'arial'}} key={center.center_id}>
                         <a href={`https://www.google.com/maps/search/?api=1&query=${center.lat},${center.long}`}
                            target='_blank'>
@@ -131,8 +204,16 @@ function App() {
                                 height='30px' width='30px'/>
                         </a>
                         CENTER NAME: {center.name}
-                        <a href="https://www.kwernerdesign.com/blog/tag/birthday-cards/"
+                        <a href="#"
+                           target="#"
                            className="tag"
+                           onClick={(e) => {
+                               e.preventDefault()
+                           }}
+
+                           style={{
+                               background: FeeTypeColor
+                           }}
                            title={'VACCINATION TYPE: ' + center.fee_type.toUpperCase()}>{center.fee_type}</a>
                     </CardHeader>
                     <CardBody style={{
@@ -140,9 +221,9 @@ function App() {
                         fontFamily: 'arial'
                     }}>Address: {center.block_name}, {center.district_name}, {center.state_name}- {center.pincode}
                         {renderTable(center.sessions)}
-                        <ReactJson style={{fontSize: '18px', marginTop: '10px', borderRadius: '8px', padding: '10px'}}
-                                   src={builder} theme="paraiso" name="Schedules" iconStyle={"circle"}
-                                   displayDataTypes={false} sortKeys={true} collapsed={1} displayArrayKey={false}/>
+                        <ReactJson style={{fontSize: '12px', marginTop: '10px', borderRadius: '8px', padding: '10px'}}
+                                   src={builder} theme="paraiso" name="Information" iconStyle={"triangle"}
+                                   displayDataTypes={false} sortKeys={true} collapsed={true} displayArrayKey={false}/>
                     </CardBody>
                     <CardFooter style={{
                         fontSize: '18px',
@@ -157,26 +238,35 @@ function App() {
     }
 
     return (
-
-        <div className="formfield"><h1 className="header mainheader">CoWIN Tracker by Ankur Paul</h1><GitHubButton
-            href="https://github.com/nooobcoder">Follow me @nooobcoder</GitHubButton>
+        <div className="formfield">
+            <h1 className="header mainheader">CoWIN Tracker by Ankur Paul</h1>
+            <GitHubButton
+                href="https://github.com/nooobcoder">Follow me @nooobcoder</GitHubButton>
+            {renderYoutubeVideo()}
             <h2 htmlFor="input1" className="header">
-                PIN CODE (required)
+                PIN CODE / POSTAL CODE (required)
             </h2>
-            <input id="input1" name="Name" onChange={async (event) => {
-                await updatePinCode(event.target.value)
-            }}/>
-            <button id="btn1" name="submit" onClick={() => {
-                getInfo();
+            <form onSubmit={getInfo} className="formfield">
 
-            }}>SUBMIT
-            </button>
-            {renderCards()}{
+                <input id="input1" name="Name" onChange={async (event) => {
+                    await updatePinCode(event.target.value)
+                }}/>
+                <br/>
+                <button id="btn1" name="submit" type="submit" >SUBMIT
+                </button>
+            </form>
+            {renderCards()}
+
+
+            {
                 centers.length > 0 ? <div>
                         <h3 className="header">Entire Metadata (JSON)</h3>
-                        <ReactJson src={centers} theme="monokai" collapsed={1}/></div> :
-                    <h3>{message}</h3>
+                        <ReactJson src={centers} theme="monokai" collapsed={true}/></div>
+                    :
+                    <h2 className='header ' style={{color: 'red'}}>{message}</h2>
+
             }
+
             <footer>
                 <p>Designer: Ankur Paul <a href="mailto:ankurpaulin2019@gmail.com">ankurpaulin2019@gmail.com</a></p>
                 <p>&#169; All data are served by the CoWIN Portal of India and it's API. Refer to <a
