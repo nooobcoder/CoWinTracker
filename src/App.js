@@ -157,6 +157,9 @@ function App() {
         const obj = new Date();
         let config = {
             headers: {
+                "Access-Control-Allow-Origin": "localhost",
+                "Access-Control-Allow-Methods":"GET",
+                "Access-Control-Allow-Headers":"Content-Type, Authorization, Accept, Accept-Language, X-Authorization"
             }
         };
 
@@ -168,10 +171,10 @@ function App() {
 
             const userAgent = new UserAgent();
             //{deviceCategory:'desktop'}
-            config.headers['User-Agent'] = userAgent.data.userAgent;
+            // config.headers['User-Agent'] = userAgent.data.userAgent;
 
             response = await axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${MyDateString}`
-                ,config)
+                )
             updateCenters(response.data.centers)
 console.log(response)
             updateMessage(`No vaccination centers found in ${pinCode}`)
