@@ -8,7 +8,7 @@ import {Card, CardHeader, CardBody, CardFooter} from 'react-simple-card';
 import "styled-components";
 import DataTable from 'react-data-table-component';
 import YouTube from 'react-youtube';
-
+import UserAgent from 'user-agents';
 
 function App() {
     const [open, setOpen] = useState(false);
@@ -36,18 +36,18 @@ function App() {
             name: `Date`,
             selector: `date`,
             center: true,
-            width:'160px',
+            width: '160px',
             sortable: true,
         }, {
             name: `Vacancy`,
             selector: `vacancy`,
             center: true,
-            width:'80px',
+            width: '80px',
             sortable: true,
 
         }, {
             name: `Age`,
-            width:'125px',
+            width: '125px',
 
             selector: `age`,
             center: true,
@@ -155,14 +155,25 @@ function App() {
     const getInfo = async (e) => {
         e.preventDefault();
         const obj = new Date();
-        const config = {
-            method: 'get',
+        let config = {
+            headers: {
+            }
         };
-        try {
-            response = await axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${obj.getDate()}-${obj.getMonth() + 1}-${obj.getFullYear()}`
-                , config)
-            updateCenters(response.data.centers)
 
+        try {
+            const obj = new Date();
+            let MyDateString;
+            obj.setDate(obj.getDate());
+            MyDateString = ('0' + obj.getDate()).slice(-2) + '-' + ('0' + (obj.getMonth() + 1)).slice(-2) + '-' + obj.getFullYear();
+
+            const userAgent = new UserAgent();
+            //{deviceCategory:'desktop'}
+            config.headers['User-Agent'] = userAgent.data.userAgent;
+
+            response = await axios.get(`https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${MyDateString}`
+                ,config)
+            updateCenters(response.data.centers)
+console.log(response)
             updateMessage(`No vaccination centers found in ${pinCode}`)
 
         } catch (error) {
@@ -252,7 +263,7 @@ function App() {
                     await updatePinCode(event.target.value)
                 }}/>
                 <br/>
-                <button id="btn1" name="submit" type="submit" >SUBMIT
+                <button id="btn1" name="submit" type="submit">SUBMIT
                 </button>
             </form>
             {renderCards()}
