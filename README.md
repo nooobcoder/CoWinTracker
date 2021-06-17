@@ -1,7 +1,9 @@
 # CoWin Tracker 
 **Done with the CoWin Vaccination Tracker app today.**
 
-URL 🔗: `http://cowintracker.duckdns.org/`
+URL 🔗: 
+[Primary URL](https://co-win-tracker-nooobcoder.vercel.app/)
+[Secondary URL](http://cowintracker.duckdns.org/)
 
 ![Mobile Responsive View](qr.png )
 
