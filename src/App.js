@@ -244,7 +244,7 @@ function App() {
               target="_blank"
             >
               <img
-                src="https://www.pinclipart.com/picdir/middle/61-5612244_map-pin-icon-green-green-map-pin-png.png"
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStTIL6Z1T10K1WTV5hsm-2QHoAsoL3w-zCWw&usqp=CAU"
                 height="30px"
                 alt="image_img"
                 width="30px"
