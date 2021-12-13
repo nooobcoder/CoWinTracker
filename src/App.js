@@ -191,7 +191,7 @@ function App() {
         `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin?pincode=${pinCode}&date=${MyDateString}`
       );
       updateCenters(response.data.centers);
-      console.log(response);
+      // console.log(response);
       updateMessage(`No vaccination centers found in ${pinCode}`);
     } catch (error) {
       console.clear();
