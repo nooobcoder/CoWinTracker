@@ -74,8 +74,9 @@ function App() {
         age: entry.min_age_limit,
       });
       for (const [i, e] of entry.slots.entries()) {
+        console.log(i, e);
         const keyname = `slot${i + 1}`;
-        data[index][keyname] = e;
+        data[index][keyname] = e.seats;
       }
     }
 
