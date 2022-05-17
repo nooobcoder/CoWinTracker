@@ -1,4 +1,4 @@
-# CoWin Tracker 
+# CoWin Tracker
 **Done with the CoWin Vaccination Tracker app today.**
 
 URL 🔗: 

@@ -4,8 +4,9 @@ import DataTable from "react-data-table-component";
 import GitHubButton from "react-github-btn";
 import ReactJson from "react-json-view";
 import { Card, CardBody, CardFooter, CardHeader } from "react-simple-card";
-import YouTube from "react-youtube";
 import "styled-components";
+import Youtube from "./components/Youtube";
+
 // import UserAgent from "user-agents";
 import "./App.css";
 
@@ -15,22 +16,22 @@ function App() {
   /* const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false); */
 
-  const renderYoutubeVideo = () => {
-    const opts = {
-      height: "320",
-      width: "570",
-      playerVars: {
-        // https://developers.google.com/youtube/player_parameters
-        autoplay: 0,
-      },
-    };
+  //   const renderYoutubeVideo = () => {
+  //     const opts = {
+  //       height: "320",
+  //       width: "570",
+  //       playerVars: {
+  //         // https://developers.google.com/youtube/player_parameters
+  //         autoplay: 0,
+  //       },
+  //     };
 
-    return (
-      <div className="header mainheader">
-        <YouTube videoId="TyenPPblNro" opts={opts} />
-      </div>
-    );
-  };
+  //     return (
+  //       <div className="header mainheader">
+  //         <YouTube videoId="TyenPPblNro" opts={opts} />
+  //       </div>
+  //     );
+  //   };
 
   const renderTable = (center) => {
     // console.log(center.length) // Number of rows
@@ -313,9 +314,10 @@ function App() {
       <GitHubButton href="https://github.com/nooobcoder">
         Follow me @nooobcoder
       </GitHubButton>
-      {renderYoutubeVideo()}
+      <Youtube />
+      {/* {renderYoutubeVideo()} */}
       <h2 htmlFor="input1" className="header">
-        PIN CODE / POSTAL CODE (required)
+        PIN CODE / POSTAL CODE / ZIP CODE (required)
       </h2>
       <form onSubmit={getInfo} className="formfield">
         <input
