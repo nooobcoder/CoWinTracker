@@ -1,58 +1,54 @@
-
 .formfield {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .tag {
-    margin-left: 5px;
-    /*background: #4CAF50;*/
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-block;
-    border-radius: 10px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 15.411764705882pt;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
-    margin-right: 5px;
-    padding: 6px 8px 7px;
-    text-decoration: none;
-    text-transform: uppercase;
-    transition: all 0.3s ease 0s;
+  margin-left: 5px;
+  /*background: #4CAF50;*/
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 10px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15.411764705882pt;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  margin-right: 5px;
+  padding: 6px 8px 7px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all 0.3s ease 0s;
 }
 
 label {
-    margin-bottom: 3px;
+  margin-bottom: 3px;
 }
 
 input {
-    border: 1px solid;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 21px;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 21px;
 }
 
-.header{
-    font-family:  Arial, sans-serif;
-
-
+.header {
+  font-family: Arial, sans-serif;
 }
-.mainheader{
-    text-align: center;
-
+.mainheader {
+  text-align: center;
 }
 
 button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    border-radius: 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 18px;
-    margin: 10px 80px 10px;
-    cursor: pointer;
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 10px 80px 10px;
+  cursor: pointer;
 }
